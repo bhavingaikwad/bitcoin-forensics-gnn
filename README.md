@@ -22,15 +22,19 @@ To ensure environment parity and scalability, this project is fully containerize
 ### 1. Build the Image
 ```bash
 docker build -t bitcoin-forensics-app .
+```
 
 ### 2. Run the Container
+```bash
 docker run -p 8501:8501 bitcoin-forensics-app
 
 The dashboard will be accessible at http://localhost:8501.
-
-🛠️ Local Execution (Non-Docker)
+```
+### 🛠️ Local Execution (Non-Docker)
+```bash
 Environment Setup: pip install -r requirements.txt
 
 Automated Pipeline: python scripts/main.py
 
 Investigator Dashboard: streamlit run scripts/investigator_dashboard.py
+```
