@@ -1,0 +1,18 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment (Very important to ignore)
+venv/
+env/
+.env
+
+# Data and Forensic Evidence (We ignore raw CSVs to prevent data leaks)
+data/*.csv
+data/elliptic_bitcoin_dataset/
+docs/*.png
+
+# System files
+.DS_Store
+.ipynb_checkpoints/
