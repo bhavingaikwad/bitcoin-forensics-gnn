@@ -7,10 +7,23 @@ import numpy as np
 st.set_page_config(page_title="CryptoGraph: Forensic Console", layout="wide")
 
 @st.cache_data
+@st.cache_data
 def load_data():
-    classes = pd.read_csv('data/elliptic_txs_classes.csv')
+    # Primary path for local development, secondary for cloud deployment
+    paths = ['data/elliptic_txs_classes.csv', 'data_sample/elliptic_txs_classes.csv']
+    feat_paths = ['data/elliptic_txs_features.csv', 'data_sample/elliptic_txs_features.csv']
+    
+    # Logic to find which file exists (MLOps best practice)
+    class_path = next((p for p in paths if os.path.exists(p)), None)
+    feat_path = next((p for p in feat_paths if os.path.exists(p)), None)
+    
+    if not class_path or not feat_path:
+        raise FileNotFoundError("Forensic data files not found in data/ or data_sample/")
+
+    classes = pd.read_csv(class_path)
+    features = pd.read_csv(feat_path, header=None)
+        
     classes['class'] = classes['class'].replace({'unknown': '3'}).astype(int)
-    features = pd.read_csv('data/elliptic_txs_features.csv', header=None, nrows=10000)
     features.columns = ['txId', 'time_step'] + [f'feat_{i}' for i in range(1, 166)]
     return pd.merge(features, classes, on='txId', how='left')
 
